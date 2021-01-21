@@ -1,6 +1,9 @@
 package com.urangawak.pimpong;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
 public class GameFrame extends JFrame{
@@ -36,7 +39,23 @@ public class GameFrame extends JFrame{
 		
 		this.setResizable(false);
 		this.pack();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int choose = JOptionPane.showConfirmDialog(null, 
+							"Do you really want to exit the application ?",
+							"Confirm Close", JOptionPane.YES_NO_OPTION, 
+							JOptionPane.INFORMATION_MESSAGE);
+				if (choose == JOptionPane.YES_OPTION) {
+					e.getWindow().dispose();
+					System.out.println("close");
+				} 
+				else {
+					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+				}
+			}
+		});
 		
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);	

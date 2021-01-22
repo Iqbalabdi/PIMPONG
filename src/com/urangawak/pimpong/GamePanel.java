@@ -23,11 +23,14 @@ public class GamePanel extends JPanel implements Runnable {
 	JButton backButton;
 	JButton restartButton;
 	Thread gameThread;
+	NewSound sound1 = new NewSound();
+	NewSound sound2 = new NewSound();
+	
 	int tag;
 	int flag = -1;
 	boolean running = false;
  
-	GamePanel(int tag){
+	GamePanel(int tag) {
 		
 		this.tag = tag;
 		this.addMouseListener(new MouseHandler());
@@ -39,8 +42,11 @@ public class GamePanel extends JPanel implements Runnable {
  
 		newPad();
 		newBall();
-		newScore();	
- 
+		newScore();
+		sound1.setFile("./Assets/Sound/pongblipa5.wav");
+		sound2.setFile("./Assets/Sound/scoreblip.wav");
+		
+		
 		gameThread = new Thread(this);
 	}
  
@@ -114,6 +120,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			ball.setDirectionX(ball.speedX);
 			ball.setDirectionY(ball.speedY);
+			sound1.play();
 		}
  
 		if (ball.intersects(Paddle2)) {
@@ -126,6 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			ball.setDirectionX(-ball.speedX);
 			ball.setDirectionY(ball.speedY);
+			sound1.play();
 		}
  
 		//score for player
@@ -133,12 +141,18 @@ public class GamePanel extends JPanel implements Runnable {
 			score.player2++;
 			newPad();
 			newBall();
+			sound2.play();
+			gameThread.suspend();
 		}
 		if (ball.x >= GAME_WIDTH-(BALL_RADIUS*2)) {
 			score.player1++;
 			newPad();
 			newBall();
+			sound2.play();
+			gameThread.suspend();
 		}
+		
+		repaint();
 	}
  
 	public void move() {
@@ -195,9 +209,7 @@ public class GamePanel extends JPanel implements Runnable {
 				gameThread.resume();
 				flag = 1;
 			}
-			
 			repaint();
 		}
 	}
- 
 }

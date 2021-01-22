@@ -49,7 +49,6 @@ public class GameFrame extends JFrame{
 							JOptionPane.INFORMATION_MESSAGE);
 				if (choose == JOptionPane.YES_OPTION) {
 					e.getWindow().dispose();
-					System.out.println("close");
 				} 
 				else {
 					setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
